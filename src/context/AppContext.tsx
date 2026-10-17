@@ -10,9 +10,9 @@ const today = new Date().toDateString();
 
 const defaultUser: UserProfile = {
   id: 'demo-user',
-  name: 'Alex Johnson',
+  name: 'SKILLTRACE AI',
   email: '',
-  avatar: 'ðŸ§‘â€ðŸ’»',
+  avatar: '👤',
   xp: 120,
   level: 2,
   streak: 3,
