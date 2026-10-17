@@ -53,12 +53,9 @@ export interface TestCaseResult {
   executionResult: ExecutionResult;
 }
 
-const JUDGE0_HOST = (import.meta.env.VITE_JUDGE0_API_HOST as string | undefined)
-  || 'judge0-ce.p.rapidapi.com';
-const JUDGE0_KEY  = import.meta.env.VITE_JUDGE0_API_KEY as string | undefined;
+const JUDGE0_HOST = 'ce.judge0.com';
 
-export const isJudge0Configured = (): boolean =>
-  Boolean(JUDGE0_KEY && JUDGE0_KEY !== 'your_judge0_key_here');
+export const isJudge0Configured = (): boolean => true;
 
 /**
  * Run code against a single input and return the result.
@@ -69,9 +66,7 @@ export async function runCode(
   languageId: string,
   stdin: string = ''
 ): Promise<ExecutionResult> {
-  if (!isJudge0Configured()) {
-    return demoResult(sourceCode, stdin);
-  }
+  
 
   const langNum = JUDGE0_LANGUAGE_IDS[languageId];
   if (!langNum) {
@@ -90,10 +85,8 @@ export async function runCode(
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'X-RapidAPI-Host': JUDGE0_HOST,
-          'X-RapidAPI-Key': JUDGE0_KEY!,
-        },
+  'Content-Type': 'application/json',
+},
         body: JSON.stringify({
           source_code: sourceCode,
           language_id: langNum,
@@ -116,10 +109,7 @@ export async function runCode(
       const pollRes = await fetch(
         `https://${JUDGE0_HOST}/submissions/${token}?base64_encoded=false`,
         {
-          headers: {
-            'X-RapidAPI-Host': JUDGE0_HOST,
-            'X-RapidAPI-Key': JUDGE0_KEY!,
-          },
+          headers: {},
         }
       );
       if (!pollRes.ok) continue;
